@@ -3,6 +3,7 @@ experimental bootloader for depthcharge
 TODO:
 improve makefile
 make u-root and linux git submodules
+automatic github actions builds
 
 how to build:
 clone u-root
