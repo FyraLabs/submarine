@@ -1,0 +1,12 @@
+experimental bootloader for depthcharge
+
+TODO:
+improve makefile
+make u-root and linux git submodules
+
+how to build:
+clone u-root
+clone linux, put source in kernel/
+copy kernel.config to kernel/.config
+make -j$(nproc)
+flash build/crboot.kpart to your drive
