@@ -2,10 +2,17 @@ BZIMAGE=build/bzImage
 INITFS=build/initramfs.cpio
 INITFSZ=build/initramfs.cpio.xz
 KPART=build/crboot.kpart
+IMG=build/crboot.bin
 
 .PHONY: clean
 
-all: $(KPART)
+all: $(IMG)
+
+$(IMG): $(KPART)
+	fallocate -l 18M $(IMG)
+	parted $(IMG) mklabel gpt --script
+	cgpt add -i 1 -t kernel -b 2048 -s 32767 -P 15 -T 1 -S 1 $(IMG)
+	dd if=$(KPART) of=$(IMG) bs=512 seek=2048 conv=notrunc
 
 $(KPART): $(BZIMAGE)
 	echo crboot > /tmp/crboot
