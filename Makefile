@@ -27,7 +27,7 @@ $(INITFSZ): $(INITFS)
 
 $(INITFS):
 	mkdir -p build
-	GBB_PATH=u-root u-root -o $(INITFS) -uinitcmd=boot core ./cmds/boot/boot
+	GBB_PATH=u-root u-root -o $(INITFS) -uinitcmd="elvish -c 'sleep 3; boot'" core ./cmds/boot/boot
 
 clean:
 	rm -rf build
