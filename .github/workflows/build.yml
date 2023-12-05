@@ -16,11 +16,11 @@ jobs:
       - name: Install dependencies
         run: dnf5 install -y git make gcc parted vboot-utils golang
 
-      - uses: actions/setup-go@v4
-
       - uses: actions/checkout@v3
         with:
           submodules: true
+
+      - uses: actions/setup-go@v4
 
       - name: Install u-root
         run: go install github.com/u-root/u-root@latest
