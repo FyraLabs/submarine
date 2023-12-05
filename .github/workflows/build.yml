@@ -27,6 +27,7 @@ jobs:
         run: |
           echo "PATH=$PATH:$HOME/go/bin" >> $GITHUB_ENV
           echo "GOCACHE=$(go env GOCACHE)" >> $GITHUB_ENV
+          echo "CCACHE_DIR=$(pwd)/ccache" >> $GITHUB_ENV
           echo "CC=ccache gcc" >> $GITHUB_ENV
 
       - name: Setup Go cache
@@ -38,7 +39,7 @@ jobs:
       - name: Setup ccache cache
         uses: actions/cache@v3
         with:
-          path: ~/.cache/ccache
+          path: ccache
           key: ccache
 
       - name: Install u-root
