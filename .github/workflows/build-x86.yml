@@ -1,4 +1,4 @@
-name: Build cr-boot
+name: Build cr-boot for x86_64 platforms
 
 on:
   push:
@@ -55,10 +55,10 @@ jobs:
       - name: Install u-root
         run: go install github.com/u-root/u-root@$UROOT_COMMIT
 
-      - name: Copy cr-boot kernel config
-        run: cp kernel.config kernel/.config
+      - name: Copy cr-boot kernel config for x86
+        run: cp configs/kernel.x86 kernel/.config
 
-      - name: Build cr-boot
+      - name: Build cr-boot for x86_64
         run: make CC="ccache gcc" -j$(nproc)
 
       - name: Upload build artifacts
