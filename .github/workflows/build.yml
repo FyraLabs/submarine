@@ -1,4 +1,4 @@
-name: Build image
+name: Build cr-boot
 
 on:
   push:
@@ -29,5 +29,7 @@ jobs:
       - name: Install u-root
         run: go install github.com/u-root/u-root@latest
 
-      - name: Build image
-        run: make -j$(nproc)
+      - name: Build cr-boot
+        run: |
+          cp kernel.config kernel/.config
+          make -j$(nproc)
