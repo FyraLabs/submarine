@@ -29,21 +29,28 @@ jobs:
           echo "GOCACHE=$(go env GOCACHE)" >> $GITHUB_ENV
           echo "CCACHE_DIR=$(pwd)/ccache" >> $GITHUB_ENV
           echo "CC=ccache gcc" >> $GITHUB_ENV
+          echo "UROOT_COMMIT=$(git rev-parse HEAD:u-root)" >> $GITHUB_ENV
+          echo "KERNEL_COMMIT=$(git rev-parse HEAD:kernel)" >> $GITHUB_ENV
 
       - name: Setup Go cache
         uses: actions/cache@v3
         with:
           path: ${{ env.GOCACHE }}
-          key: go
+          key: go-${{ env.UROOT_COMMIT }}
+          restore-keys: |
+            go-
 
       - name: Setup ccache cache
         uses: actions/cache@v3
         with:
           path: ccache
-          key: ccache
+          key: ccache-${{ env.KERNEL_COMMIT }}-${{ hashFiles('kernel.config') }}
+          restore-keys: |
+            ccache-${{ env.KERNEL_COMMIT }}-
+            ccache-
 
       - name: Install u-root
-        run: go install github.com/u-root/u-root@latest
+        run: go install github.com/u-root/u-root@$UROOT_COMMIT
 
       - name: Copy cr-boot kernel config
         run: cp kernel.config kernel/.config
