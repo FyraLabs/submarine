@@ -23,6 +23,10 @@ jobs:
         with:
           submodules: true
 
+      - name: Add Git safe directory
+        run: |
+          git config --global --add safe.directory $(pwd)
+
       - name: Setup enviroment variables
         run: |
           echo "PATH=$PATH:$HOME/go/bin" >> $GITHUB_ENV
