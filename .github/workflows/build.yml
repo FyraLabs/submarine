@@ -47,7 +47,7 @@ jobs:
       - name: Setup ccache cache
         uses: actions/cache@v3
         with:
-          path: ccache
+          path: ${{ env.CCACHE_DIR }}
           key: ccache-${{ env.KERNEL_COMMIT }}-${{ hashFiles('kernel.config') }}
           restore-keys: |
             ccache-${{ env.KERNEL_COMMIT }}-
