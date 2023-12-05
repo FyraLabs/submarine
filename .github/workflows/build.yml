@@ -17,7 +17,7 @@ jobs:
       - name: Install dependencies
         run: |
           dnf5 update -y
-          dnf5 install -y git automake make gcc ccache flex bison elfutils-devel parted vboot-utils golang tar xz bc
+          dnf5 install -y git make gcc ccache flex bison elfutils-devel parted vboot-utils golang xz bc
 
       - uses: actions/checkout@v3
         with:
