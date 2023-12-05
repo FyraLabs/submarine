@@ -13,12 +13,12 @@ jobs:
       image: registry.fedoraproject.org/fedora-minimal:39
 
     steps:
+      - name: Install dependencies
+        run: dnf5 install -y git make gcc parted vboot-utils golang
+
       - uses: actions/checkout@v3
         with:
           submodules: true
-
-      - name: Install dependencies
-        run: dnf5 install -y make gcc parted vboot-utils golang
 
       - name: Install u-root
         run: go install github.com/u-root/u-root@latest
