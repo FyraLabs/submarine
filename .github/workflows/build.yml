@@ -14,15 +14,16 @@ jobs:
 
     steps:
       - name: Install dependencies
-        run: dnf5 install -y git make gcc parted vboot-utils golang
+        run: |
+          dnf5 update -y
+          dnf5 install -y git make gcc parted vboot-utils golang xz
 
       - uses: actions/checkout@v3
         with:
           submodules: true
 
       - name: Setup PATH
-        run: |
-          echo "PATH=$PATH:$HOME/go/bin" >> $GITHUB_ENV
+        run: echo "PATH=$PATH:$HOME/go/bin" >> $GITHUB_ENV
 
       - name: Install u-root
         run: go install github.com/u-root/u-root@latest
