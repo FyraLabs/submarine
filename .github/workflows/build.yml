@@ -20,7 +20,9 @@ jobs:
         with:
           submodules: true
 
-      - uses: actions/setup-go@v4
+      - name: Setup PATH
+        run: |
+          echo "PATH=$PATH:$HOME/go/bin" >> $GITHUB_ENV
 
       - name: Install u-root
         run: go install github.com/u-root/u-root@latest
