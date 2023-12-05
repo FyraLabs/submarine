@@ -29,10 +29,11 @@ jobs:
       - name: Install u-root
         run: go install github.com/u-root/u-root@latest
 
+      - name: Copy cr-boot kernel config
+        run: cp kernel.config kernel/.config
+
       - name: Build cr-boot
-        run: |
-          cp kernel.config kernel/.config
-          make -j$(nproc)
+        run: make -j$(nproc)
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
