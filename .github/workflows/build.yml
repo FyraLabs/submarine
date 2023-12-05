@@ -17,14 +17,30 @@ jobs:
       - name: Install dependencies
         run: |
           dnf5 update -y
-          dnf5 install -y git automake make gcc flex bison elfutils-devel parted vboot-utils golang tar xz bc
+          dnf5 install -y git automake make gcc ccache flex bison elfutils-devel parted vboot-utils golang tar xz bc
 
       - uses: actions/checkout@v3
         with:
           submodules: true
 
-      - name: Setup PATH
-        run: echo "PATH=$PATH:$HOME/go/bin" >> $GITHUB_ENV
+      - name: Setup enviroment variables
+        run: |
+          echo "PATH=$PATH:$HOME/go/bin" >> $GITHUB_ENV
+          echo "GOCACHE=$(go env GOCACHE)" >> $GITHUB_ENV
+          echo "CCACHE_DIR=ccache" >> $GITHUB_ENV
+          echo "CC=ccache gcc" >> $GITHUB_ENV
+
+      - name: Setup Go cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.GOCACHE }}
+          key: go
+
+      - name: Setup ccache cache
+        uses: actions/cache@v3
+        with:
+          path: ccache
+          key: ccache
 
       - name: Install u-root
         run: go install github.com/u-root/u-root@latest
