@@ -1,0 +1,27 @@
+name: Build image
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: registry.fedoraproject.org/fedora-minimal:39
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Install dependencies
+        run: dnf5 install -y make gcc parted vboot-utils golang
+
+      - name: Install u-root
+        run: go install github.com/u-root/u-root@latest
+
+      - name: Build image
+        run: make -j$(nproc)
