@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ARM64
     container:
       image: registry.fedoraproject.org/fedora-minimal:39
 
@@ -17,7 +17,7 @@ jobs:
       - name: Install dependencies
         run: |
           dnf5 update -y
-          dnf5 install -y git make gcc gcc-aarch64-linux-gnu ccache flex bison elfutils-devel parted vboot-utils golang xz bc tar
+          dnf5 install -y git make gcc ccache flex bison elfutils-devel parted vboot-utils golang xz bc tar
 
       - uses: actions/checkout@v3
         with:
@@ -34,7 +34,6 @@ jobs:
           echo "CCACHE_DIR=$(pwd)/ccache" >> $GITHUB_ENV
           echo "UROOT_COMMIT=$(git rev-parse HEAD:u-root)" >> $GITHUB_ENV
           echo "KERNEL_COMMIT=$(git rev-parse HEAD:kernel)" >> $GITHUB_ENV
-          echo "ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-" >> $GITHUB_ENV
 
       - name: Setup Go cache
         uses: actions/cache@v3
