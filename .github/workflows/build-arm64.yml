@@ -57,7 +57,7 @@ jobs:
         run: go install github.com/u-root/u-root@$UROOT_COMMIT
 
       - name: Copy ARM64 kernel configuration
-        run: configs/kernel.mt8183 kernel/.config
+        run: cp configs/kernel.mt8183 kernel/.config
 
       - name: Build cr-boot
         run: make CC="ccache gcc" -j$(nproc)
