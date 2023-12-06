@@ -37,7 +37,7 @@ $(KPART_X64): $(BZIMAGE_X64)
 
 $(BZIMAGE_X64): $(INITFSZ_X64)
 	cp $(CONFDIR)/$(CONFIG_X64) kernel/.config
-	make -j8 -C kernel
+	make -C kernel
 	cp kernel/arch/x86/boot/bzImage $(WORKDIR)/$(BZIMAGE_X64)
 
 $(INITFSZ_X64): $(INITFS_X64)
@@ -64,7 +64,7 @@ $(KPART_A64): $(BZIMAGE_A64)
 
 $(BZIMAGE_A64): $(INITFSZ_A64)
 	cp $(CONFDIR)/$(CONFIG_MT8183) kernel/.config
-	ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- make -j8 -C kernel
+	ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- make -C kernel
 	cp kernel/arch/arm64/boot/Image.gz $(WORKDIR)/$(BZIMAGE_A64)
 
 $(INITFSZ_A64): $(INITFS_A64)
