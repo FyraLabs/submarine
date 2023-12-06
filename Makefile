@@ -42,7 +42,7 @@ $(BZIMAGE_X64): $(INITFSZ_X64)
 
 $(INITFSZ_X64): $(INITFS_X64)
 	xz -kf -9 --check=crc32 $(WORKDIR)/$(INITFS_X64)
-o
+
 $(INITFS_X64):
 	mkdir -p build
 	GBB_PATH=u-root go run ./u-root -o $(WORKDIR)/$(INITFS_X64) -uinitcmd="elvish -c 'sleep 3; boot'" core ./cmds/boot/boot
