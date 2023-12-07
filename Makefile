@@ -21,6 +21,11 @@ INITFSZ_A64=u-root-a64.cpio.xz
 KPART_A64=crboot-a64.kpart
 IMG_A64=crboot-a64.bin
 
+.PHONY: usage
+
+usage:
+	@echo "usage: make [x86_64|arm64]"
+
 # Use 'make: x86_64' to build x86 image.
 x86_64: $(IMG_X64)
 $(IMG_X64): $(KPART_X64)
@@ -73,6 +78,6 @@ $(INITFSZ_A64): $(INITFS_A64)
 $(INITFS_A64):
 	mkdir -p build images
 	GBB_PATH=u-root GOOS=linux GOARCH=arm64 u-root -o $(WORKDIR)/$(INITFS_A64) -uinitcmd="elvish -c 'sleep 3; boot'" core ./cmds/boot/boot
-	
+
 clean:
 	rm -rf $(WORKDIR)
