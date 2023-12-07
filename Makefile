@@ -33,6 +33,7 @@ $(IMG_X64): $(KPART_X64)
 	parted $(WORKDIR)/$(IMG_X64) mklabel gpt --script
 	cgpt add -i 1 -t kernel -b 2048 -s 32767 -P 15 -T 1 -S 1 $(WORKDIR)/$(IMG_X64)
 	dd if=$(WORKDIR)/$(KPART_X64) of=$(WORKDIR)/$(IMG_X64) bs=512 seek=2048 conv=notrunc
+	mkdir -p $(OUTPUTDIR)
 	cp $(WORKDIR)/$(IMG_X64) $(OUTPUTDIR)/$(IMG_X64)
 	@echo 'Build complete! Resulting file saved as "$(IMG_X64)" in "images" directory.'
 
@@ -60,6 +61,7 @@ $(IMG_A64): $(KPART_A64)
 	parted $(WORKDIR)/$(IMG_A64) mklabel gpt --script
 	cgpt add -i 1 -t kernel -b 2048 -s 32767 -P 15 -T 1 -S 1 $(WORKDIR)/$(IMG_A64)
 	dd if=$(WORKDIR)/$(KPART_A64) of=$(WORKDIR)/$(IMG_A64) bs=512 seek=2048 conv=notrunc
+	mkdir -p $(OUTPUTDIR)
 	cp $(WORKDIR)/$(IMG_A64) $(OUTPUTDIR)/$(IMG_A64)
 	@echo 'Build complete! Resulting file saved as "$(IMG_A64)" in "images" directory.'
 
