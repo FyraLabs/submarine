@@ -59,7 +59,7 @@ jobs:
         run: cp configs/kernel.mt8183 kernel/.config
 
       - name: Build cr-boot
-        run: make CC="ccache gcc" -j$(nproc)
+        run: make CC="ccache gcc" -j$(nproc) arm64
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
