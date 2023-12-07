@@ -71,7 +71,7 @@ $(KPART_A64): $(BZIMAGE_A64)
 
 $(BZIMAGE_A64): $(INITFSZ_A64)
 	cp $(CONFDIR)/$(CONFIG_MT8183) kernel/.config
-	make -C kernel
+	ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- make -C kernel
 	cp kernel/arch/arm64/boot/Image.gz $(WORKDIR)/$(BZIMAGE_A64)
 
 $(INITFSZ_A64): $(INITFS_A64)
