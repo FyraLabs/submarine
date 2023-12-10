@@ -6,7 +6,6 @@ CONFDIR=configs
 OUTPUTDIR=images
 TMPFILE=/tmp/$(project_name)
 
-# x86 machines use common kernel configuration
 CONFIG_X64=kernel.x86
 BZIMAGE_X64=bzImage.x86
 INITFS_X64=u-root-x86.cpio
@@ -14,8 +13,7 @@ INITFSZ_X64=u-root-x86.cpio.xz
 KPART_X64=$(project_name)-x86.kpart
 IMG_X64=$(project_name)-x86.bin
 
-# The only supported ARM64 platform right now is MediaTek MT8183.
-CONFIG_MT8183=kernel.mt8183
+CONFIG_A64=kernel.a64
 BZIMAGE_A64=bzImage.a64
 INITFS_A64=u-root-a64.cpio
 INITFSZ_A64=u-root-a64.cpio.xz
@@ -75,7 +73,7 @@ $(KPART_A64): $(BZIMAGE_A64)
 	@echo 'Kernel partition binary saved as "$(KPART_A64)" in "images" directory.'
 
 $(BZIMAGE_A64): $(INITFSZ_A64)
-	cp $(CONFDIR)/$(CONFIG_MT8183) kernel/.config
+	cp $(CONFDIR)/$(CONFIG_A64) kernel/.config
 	[ uname -m = x86_64 ] && ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- make -C kernel || make -C kernel
 	cp kernel/arch/arm64/boot/Image.gz $(WORKDIR)/$(BZIMAGE_A64)
 
