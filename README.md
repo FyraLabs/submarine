@@ -2,7 +2,7 @@
 
 # Submarine
 
-An experimental bootloader for depthcharge.
+An experimental bootloader for ChomeOS's depthcharge.
 
 ## 📕 Explainer
 Submarine provides a minimal Linux environmemt that lives in a small partition (16mb) on the disk. We use this environment to bootstrap a full Linux system (or a different system if you're brave.)
