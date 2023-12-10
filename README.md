@@ -14,7 +14,8 @@ Additional documention can be found on Fyra Developer (under construction!)
 
 We offer prebuilt versions of the images per each commit:
 
-- [Latest build](https://github.com/FyraLabs/submarine/blob/main/.github/workflows/build.yml)
+- [Latest x86_64 build](https://nightly.link/FyraLabs/submarine/workflows/build/main/submarine-x86_64.zip)
+- [Latest arm64 build](https://nightly.link/FyraLabs/submarine/workflows/build/main/submarine-arm64.zip)
 
 ## 🛠️ Dependencies
 
