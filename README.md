@@ -52,10 +52,10 @@ Please note that you **must** pass an architecture target.
 
 The build output is located in `build/`.
 For testing, an image is built at `build/submarine.bin` which you can directly flash onto an external drive.
-So, for example, replace `/dev/sda` with the device file of the external drive:
+So, for example, replace `/dev/sdX` with the device file of the external drive:
 
 ```bash
-sudo dd if=build/submarine.bin of=/dev/sda
+sudo dd if=build/submarine.bin of=/dev/sdX
 ```
 
 ## 🗒️ Todos
