@@ -9,7 +9,10 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: ["x86_64", "arm64"]
+    runs-on: ${{ matrix.platform == 'x86_64' && 'ubuntu-latest' || 'ARM64' }}
     container:
       image: registry.fedoraproject.org/fedora-minimal:39
 
@@ -17,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: |
           dnf5 update -y
-          dnf5 install -y git make gcc ccache flex bison elfutils-devel parted vboot-utils golang xz bc tar
+          dnf5 install -y git make gcc ccache flex bison elfutils-devel parted vboot-utils golang xz bc tar openssl-devel
 
       - uses: actions/checkout@v3
         with:
@@ -39,30 +42,30 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ env.GOCACHE }}
-          key: go-${{ env.UROOT_COMMIT }}
+          key: go-${{ matrix.platform }}-${{ env.UROOT_COMMIT }}
           restore-keys: |
-            go-
+            go-${{ matrix.platform }}-
 
       - name: Setup ccache cache
         uses: actions/cache@v3
         with:
           path: ${{ env.CCACHE_DIR }}
-          key: ccache-${{ env.KERNEL_COMMIT }}-${{ hashFiles('kernel.config') }}
+          key: ccache-${{ matrix.platform }}-${{ env.KERNEL_COMMIT }}-${{ hashFiles('kernel.config') }}
           restore-keys: |
-            ccache-${{ env.KERNEL_COMMIT }}-
-            ccache-
+            ccache-${{ matrix.platform }}-${{ env.KERNEL_COMMIT }}-
+            ccache-${{ matrix.platform }}-
 
       - name: Install u-root
         run: go install github.com/u-root/u-root@$UROOT_COMMIT
 
-      - name: Copy submarine kernel config
-        run: cp kernel.config kernel/.config
+      - name: Copy submarine kernel configuration
+        run: cp configs/kernel.${{ matrix.platform == 'x86_64' && 'x86' || 'mt8183' }} kernel/.config
 
       - name: Build submarine
-        run: make CC="ccache gcc" -j$(nproc)
+        run: make CC="ccache gcc" -j$(nproc) ${{ matrix.platform }}
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: submarine
+          name: submarine-${{ matrix.platform }}
           path: build
