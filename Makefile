@@ -41,6 +41,8 @@ $(IMG_X64): $(KPART_X64)
 $(KPART_X64): $(BZIMAGE_X64)
 	echo $(project_name) > $(TMPFILE)
 	futility vbutil_kernel --pack $(WORKDIR)/$(KPART_X64) --signprivate /usr/share/vboot/devkeys/kernel_data_key.vbprivk --keyblock /usr/share/vboot/devkeys/kernel.keyblock --config $(TMPFILE) --bootloader $(TMPFILE) --vmlinuz $(WORKDIR)/$(BZIMAGE_X64) --version 1 --arch x86
+	cp $(WORKDIR)/$(KPART_X64) $(OUTPUTDIR)/$(KPART_X64)
+	@echo 'Kernel partition binary saved as "$(KPART_X64)" in "images" directory.'
 
 $(BZIMAGE_X64): $(INITFSZ_X64)
 	cp $(CONFDIR)/$(CONFIG_X64) kernel/.config
@@ -69,6 +71,8 @@ $(IMG_A64): $(KPART_A64)
 $(KPART_A64): $(BZIMAGE_A64)
 	echo $(project_name) > $(TMPFILE)
 	futility vbutil_kernel --pack $(WORKDIR)/$(KPART_A64) --signprivate /usr/share/vboot/devkeys/kernel_data_key.vbprivk --keyblock /usr/share/vboot/devkeys/kernel.keyblock --config $(TMPFILE) --bootloader $(TMPFILE) --vmlinuz $(WORKDIR)/$(BZIMAGE_A64) --version 1 --arch arm64
+	cp $(WORKDIR)/$(KPART_A64) $(OUTPUTDIR)/$(KPART_A64)
+	@echo 'Kernel partition binary saved as "$(KPART_A64)" in "images" directory.'
 
 $(BZIMAGE_A64): $(INITFSZ_A64)
 	cp $(CONFDIR)/$(CONFIG_MT8183) kernel/.config
