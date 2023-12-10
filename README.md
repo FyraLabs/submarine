@@ -31,6 +31,7 @@ vboot-utils
 golang
 xz
 bc
+openssl-devel
 ```
 
 Additionally, you'll need to install u-root. To install the latest version:
@@ -44,8 +45,10 @@ go install github.com/u-root/u-root@latest
 Simply clone this repo with submodules, so pass `--recurse-submodules` to `git clone`, then:
 
 ```bash
-make -j$(nproc)
+make -j$(nproc) <x86_64|arm64>
 ```
+
+Please note that you **must** pass an architecture target.
 
 The build output is located in `build/`.
 For testing, an image is built at `build/submarine.bin` which you can directly flash onto an external drive.
