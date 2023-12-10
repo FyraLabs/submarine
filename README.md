@@ -60,4 +60,5 @@ sudo dd if=build/submarine.bin of=/dev/sda
 
 ## 🗒️ Todos
 
-- improve makefile
+- Create kpart on arm
+- Clean up mt8183 config
