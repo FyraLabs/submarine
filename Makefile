@@ -1,8 +1,8 @@
 BZIMAGE=build/bzImage
 INITFS=build/initramfs.cpio
 INITFSZ=build/initramfs.cpio.xz
-KPART=build/crboot.kpart
-IMG=build/crboot.bin
+KPART=build/submarine.kpart
+IMG=build/submarine.bin
 
 .PHONY: clean
 
@@ -15,8 +15,8 @@ $(IMG): $(KPART)
 	dd if=$(KPART) of=$(IMG) bs=512 seek=2048 conv=notrunc
 
 $(KPART): $(BZIMAGE)
-	echo crboot > /tmp/crboot
-	futility vbutil_kernel --pack $(KPART) --signprivate /usr/share/vboot/devkeys/kernel_data_key.vbprivk --keyblock /usr/share/vboot/devkeys/kernel.keyblock --config /tmp/crboot --bootloader /tmp/crboot --vmlinuz $(BZIMAGE) --version 1 --arch x86
+	echo submarine > /tmp/submarine
+	futility vbutil_kernel --pack $(KPART) --signprivate /usr/share/vboot/devkeys/kernel_data_key.vbprivk --keyblock /usr/share/vboot/devkeys/kernel.keyblock --config /tmp/submarine --bootloader /tmp/submarine --vmlinuz $(BZIMAGE) --version 1 --arch x86
 
 $(BZIMAGE): $(INITFSZ)
 	make -C kernel

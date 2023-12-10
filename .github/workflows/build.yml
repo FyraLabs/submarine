@@ -1,4 +1,4 @@
-name: Build cr-boot
+name: Build submarine
 
 on:
   push:
@@ -55,14 +55,14 @@ jobs:
       - name: Install u-root
         run: go install github.com/u-root/u-root@$UROOT_COMMIT
 
-      - name: Copy cr-boot kernel config
+      - name: Copy submarine kernel config
         run: cp kernel.config kernel/.config
 
-      - name: Build cr-boot
+      - name: Build submarine
         run: make CC="ccache gcc" -j$(nproc)
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: cr-boot
+          name: submarine
           path: build

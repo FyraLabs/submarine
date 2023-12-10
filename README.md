@@ -18,7 +18,7 @@ Installation instructions can be found on the Ultramarine Wiki (under constructi
 
 We offer prebuilt versions of the images per each commit:
 
-- [Latest build](https://github.com/FyraLabs/cr-boot/blob/main/.github/workflows/build.yml)
+- [Latest build](https://github.com/FyraLabs/submarine/blob/main/.github/workflows/build.yml)
 
 ## 🛠️ Dependencies
 
@@ -52,11 +52,11 @@ make -j$(nproc)
 ```
 
 The build output is located in `build/`.
-For testing, an image is built at `build/crboot.bin` which you can directly flash onto an external drive.
+For testing, an image is built at `build/submarine.bin` which you can directly flash onto an external drive.
 So, for example, replace `/dev/sda` with the device file of the external drive:
 
 ```bash
-sudo dd if=build/crboot.bin of=/dev/sda
+sudo dd if=build/submarine.bin of=/dev/sda
 ```
 
 ## 🗒️ Todos
