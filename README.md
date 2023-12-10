@@ -1,12 +1,18 @@
 <!-- <img align="left" style="vertical-align: middle" width="120" height="120" alt="Skiff Icon" src="data/icons/app.svg"> -->
 
-# cr-boot
+# submarine
 
 An experimental bootloader for depthcharge.
 
 ###
 
 <!-- [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0) -->
+
+## ❓ How It Works
+Submarine provides a minimal Linux environmemt that lives in a small partition (16mb) on the disk. We use this environment to bootstrap a full Ultramarine Linux system.
+
+Installation instructions can be found on the Ultramarine Wiki (under construction!)
+
 
 ## 📦 Builds
 
