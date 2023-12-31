@@ -45,9 +45,9 @@ $(KPART_X64): $(BZIMAGE_X64)
 	@echo 'Kernel partition binary saved as "$(KPART_X64)" in "images" directory.'
 
 $(BZIMAGE_X64): $(INITFSZ_X64)
-	cp $(CONFDIR)/$(CONFIG_X64) kernel/.config
-	make -C kernel
-	cp kernel/arch/x86/boot/bzImage $(WORKDIR)/$(BZIMAGE_X64)
+	cp $(CONFDIR)/$(CONFIG_X64) kernel-lts/.config
+	make -C kernel-lts
+	cp kernel-lts/arch/x86/boot/bzImage $(WORKDIR)/$(BZIMAGE_X64)
 
 $(INITFSZ_X64): $(INITFS_X64)
 	xz -kf -9 --check=crc32 $(WORKDIR)/$(INITFS_X64)
@@ -75,9 +75,9 @@ $(KPART_A64): $(BZIMAGE_A64)
 	@echo 'Kernel partition binary saved as "$(KPART_A64)" in "images" directory.'
 
 $(BZIMAGE_A64): $(INITFSZ_A64)
-	cp $(CONFDIR)/$(CONFIG_MT8183) kernel/.config
-	[ $(shell uname -m) = x86_64 ] && ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- make -C kernel || make -C kernel
-	cp kernel/arch/arm64/boot/Image.gz $(WORKDIR)/$(BZIMAGE_A64)
+	cp $(CONFDIR)/$(CONFIG_MT8183) kernel-mainline/.config
+	[ $(shell uname -m) = x86_64 ] && ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- make -C kernel-mainline || make -C kernel-mainline
+	cp kernel-mainline/arch/arm64/boot/Image.gz $(WORKDIR)/$(BZIMAGE_A64)
 
 $(INITFSZ_A64): $(INITFS_A64)
 	xz -kf -9 --check=crc32 $(WORKDIR)/$(INITFS_A64)
