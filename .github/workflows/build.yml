@@ -58,9 +58,6 @@ jobs:
       - name: Install u-root
         run: go install github.com/u-root/u-root@$UROOT_COMMIT
 
-      - name: Copy submarine kernel configuration
-        run: cp configs/kernel.${{ matrix.platform == 'x86_64' && 'x86' || 'mt8183' }} kernel/.config
-
       - name: Build submarine
         run: make CC="ccache gcc" -j$(nproc) ${{ matrix.platform }}
 
