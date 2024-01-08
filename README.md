@@ -65,4 +65,4 @@ sudo dd if=build/submarine.bin of=/dev/sdX
 ## 🗒️ Todos
 
 - Create kpart on arm
-- Clean up mt8183 config
+- Clean up kernel configs
