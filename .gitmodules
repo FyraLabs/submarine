@@ -1,6 +1,10 @@
 [submodule "u-root"]
 	path = u-root
 	url = https://github.com/u-root/u-root.git
-[submodule "kernel"]
-	path = kernel
+[submodule "kernel-mainline"]
+	path = kernel-mainline
+	url = https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+[submodule "kernel-lts"]
+	path = kernel-lts
 	url = https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+  branch = linux-6.6.y
