@@ -76,7 +76,7 @@ $(KPART_A64): $(BZIMAGE_A64)
 		--kernel $(WORKDIR)/$(BZIMAGE_A64) \
 		--fdtdir $(WORKDIR)/dtbs \
 		--root none \
-		--kernel-cmdline "" \
+		--kernel-cmdline "console=tty0" \
 		--output $(WORKDIR)/$(KPART_A64)
 	mkdir -p $(OUTPUTDIR)
 	cp $(WORKDIR)/$(KPART_A64) $(OUTPUTDIR)/$(KPART_A64)
