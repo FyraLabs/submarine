@@ -63,7 +63,7 @@ $(INITFS_X64):
 # Use 'make arm64' to build ARM64 (cross-compiling is supported).
 arm64: $(IMG_A64)
 $(IMG_A64): $(KPART_A64)
-	fallocate -l 65M $(WORKDIR)/$(IMG_A64)
+	fallocate -l 69M $(WORKDIR)/$(IMG_A64)
 	parted $(WORKDIR)/$(IMG_A64) mklabel gpt --script
 	cgpt add -i 1 -t kernel -b 2048 -s 131068 -P 15 -T 1 -S 1 $(WORKDIR)/$(IMG_A64)
 	dd if=$(WORKDIR)/$(KPART_A64) of=$(WORKDIR)/$(IMG_A64) bs=512 seek=2048 conv=notrunc
