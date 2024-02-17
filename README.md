@@ -64,5 +64,4 @@ sudo dd if=build/submarine.bin of=/dev/sdX
 
 ## 🗒️ Todos
 
-- Create kpart on arm
 - Clean up kernel configs
