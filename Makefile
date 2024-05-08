@@ -57,7 +57,7 @@ $(INITFSZ_X64): $(INITFS_X64)
 
 $(INITFS_X64):
 	mkdir -p build
-	GBB_PATH=u-root u-root -o $(WORKDIR)/$(INITFS_X64) -uinitcmd="elvish -c 'sleep 3; boot'" core ./cmds/boot/boot
+	pushd u-root && GBB_PATH=u-root GOOS=linux GOARCH=x86_64 u-root -o ../$(WORKDIR)/$(INITFS_X64) -uinitcmd="elvish -c 'sleep 3; boot'" core cmds/boot/boot; popd
 
 
 # Use 'make arm64' to build ARM64 (cross-compiling is supported).
@@ -94,7 +94,7 @@ $(INITFSZ_A64): $(INITFS_A64)
 
 $(INITFS_A64):
 	mkdir -p build images
-	GBB_PATH=u-root GOOS=linux GOARCH=arm64 u-root -o $(WORKDIR)/$(INITFS_A64) -uinitcmd="elvish -c 'sleep 3; boot'" core ./cmds/boot/boot
+	pushd u-root && GBB_PATH=u-root GOOS=linux GOARCH=arm64 u-root -o ../$(WORKDIR)/$(INITFS_A64) -uinitcmd="elvish -c 'sleep 3; boot'" core cmds/boot/boot; popd
 
 clean:
 	rm -rf $(WORKDIR)
