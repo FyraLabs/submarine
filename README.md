@@ -8,6 +8,7 @@ An experimental bootloader for ChomeOS's depthcharge.
 > Submarine is currently beta software. Please exercise care with your system and report any issues you encounter.
 
 ## 📕 Explainer
+
 Submarine provides a minimal Linux environmemt that lives in a small partition (16mb) on the disk. We use this environment to bootstrap a full Linux system (or a different system if you're brave.)
 
 [Additional documention can be found on Fyra Developer (under construction!)
@@ -27,6 +28,7 @@ Please make sure you have these dependencies first before building.
 ```bash
 make
 gcc
+ccache
 flex
 bison
 elfutils-devel
@@ -35,13 +37,23 @@ vboot-utils
 golang
 xz
 bc
+tar
 openssl-devel
+python3-pip
+uboot-tools
 ```
 
-Additionally, you'll need to install u-root. To install the latest version:
+Additionally, you'll need to install `u-root` and `depthcharge-tools`. To install the latest version:
 
 ```bash
 go install github.com/u-root/u-root@latest
+pip3 install depthcharge-tools
+```
+
+Lastly, you may need to install a cross-compile gcc. For example:
+
+```bash
+gcc-aarch64-linux-gnu
 ```
 
 ## 🏗️ Building
