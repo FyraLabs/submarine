@@ -5,6 +5,7 @@ WORKDIR=build
 CONFDIR=configs
 OUTPUTDIR=images
 TMPFILE=/tmp/$(project_name)
+VPATH=$(WORKDIR):$(OUTPUTDIR)
 
 CONFIG_X64=kernel.x86
 BZIMAGE_X64=bzImage.x86
