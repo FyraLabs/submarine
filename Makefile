@@ -4,6 +4,7 @@ project_name = submarine
 WORKDIR=build
 CONFDIR=configs
 OUTPUTDIR=images
+PATCHDIR=patches
 TMPFILE=/tmp/$(project_name)
 VPATH=$(WORKDIR):$(OUTPUTDIR)
 
@@ -21,7 +22,7 @@ INITFSZ_A64=u-root-a64.cpio.xz
 KPART_A64=$(project_name)-a64.kpart
 IMG_A64=$(project_name)-a64.bin
 
-.PHONY: usage
+.PHONY: usage kernel_patches
 
 ifeq ($(shell uname -m), x86_64)
         CROSS=aarch64-linux-gnu-
@@ -85,7 +86,7 @@ $(KPART_A64): $(BZIMAGE_A64)
 	cp $(WORKDIR)/$(KPART_A64) $(OUTPUTDIR)/$(KPART_A64)
 	@echo 'Kernel partition binary saved as "$(KPART_A64)" in "images" directory.'
 
-$(BZIMAGE_A64): $(INITFSZ_A64)
+$(BZIMAGE_A64): $(INITFSZ_A64) kernel_patches
 	cp $(CONFDIR)/$(CONFIG_A64) kernel/.config
 	CROSS_COMPILE=$(CROSS) ARCH=arm64 make -C kernel olddefconfig
 	CROSS_COMPILE=$(CROSS) ARCH=arm64 make -C kernel
@@ -100,5 +101,11 @@ $(INITFS_A64):
 	cd u-root; \
 	  GBB_PATH=u-root GOOS=linux GOARCH=arm64 u-root -o ../$(WORKDIR)/$(INITFS_A64) -uinitcmd="elvish -c 'sleep 3; boot'" core cmds/boot/boot
 
+kernel_patches:
+	cd kernel; git reset --hard; git clean -df
+	cd kernel; for patch in $$(ls ../$(PATCHDIR)); do patch -p1 < ../$(PATCHDIR)/$$patch; done
+
 clean:
 	rm -rf $(WORKDIR)
+	cd kernel; git reset --hard; git clean -df;
+	make -C kernel clean
