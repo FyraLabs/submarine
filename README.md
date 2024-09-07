@@ -11,7 +11,7 @@ An experimental bootloader for ChomeOS's depthcharge.
 
 Submarine provides a minimal Linux environmemt that lives in a small partition (16mb) on the disk. We use this environment to bootstrap a full Linux system (or a different system if you're brave.)
 
-[Additional documention can be found on Fyra Developer](https://developer.fyralabs.com/submarine)
+[Additional documention can be found on Fyra Developer (under construction!)](https://developer.fyralabs.com/submarine)
 
 ## 📦 Builds
 
