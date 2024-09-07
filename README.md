@@ -11,8 +11,7 @@ An experimental bootloader for ChomeOS's depthcharge.
 
 Submarine provides a minimal Linux environmemt that lives in a small partition (16mb) on the disk. We use this environment to bootstrap a full Linux system (or a different system if you're brave.)
 
-[Additional documention can be found on Fyra Developer (under construction!)
-](https://developer.fyralabs.com/submarine)
+[Additional documention can be found on Fyra Developer (under construction!)](https://developer.fyralabs.com/submarine)
 
 ## 📦 Builds
 
@@ -43,7 +42,8 @@ python3-pip
 uboot-tools
 ```
 
-Additionally, you'll need to install `u-root` and `depthcharge-tools`. To install the latest version:
+Additionally, you'll need to install `u-root` and `depthcharge-tools` (if you have the [Terra repository](https://terra.fyralabs.com/), you can `dnf install` them). 
+To install the latest versions:
 
 ```bash
 go install github.com/u-root/u-root@latest
