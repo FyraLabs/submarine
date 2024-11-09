@@ -23,7 +23,7 @@ jobs:
           dnf5 install -y git make gcc ccache flex bison elfutils-devel parted vboot-utils golang xz bc tar openssl-devel python3-pip uboot-tools ${{ matrix.platform == 'arm64' && 'gcc-aarch64-linux-gnu' || '' }}
           pip3 install depthcharge-tools
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
 
@@ -40,7 +40,7 @@ jobs:
           echo "KERNEL_COMMIT=$(git rev-parse HEAD:kernel)" >> $GITHUB_ENV
 
       - name: Setup Go cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ env.GOCACHE }}
           key: go-${{ matrix.platform }}-${{ env.UROOT_COMMIT }}
@@ -48,7 +48,7 @@ jobs:
             go-${{ matrix.platform }}-
 
       - name: Setup ccache cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ env.CCACHE_DIR }}
           key: ccache-${{ matrix.platform }}-${{ env.KERNEL_COMMIT }}-${{ hashFiles('kernel.config') }}
@@ -66,7 +66,7 @@ jobs:
         run: make ${{ matrix.platform == 'x86_64' && 'CC="ccache gcc"' || '' }} -j$(nproc) ${{ matrix.platform }}
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: submarine-${{ matrix.platform }}
           path: build
