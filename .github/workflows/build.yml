@@ -12,15 +12,15 @@ jobs:
     strategy:
       matrix:
         platform: ["x86_64", "arm64"]
-    runs-on: ${{ matrix.platform == 'x86_64' && 'ubuntu-latest' || 'ARM64' }}
+    runs-on: ubuntu-latest
     container:
-      image: registry.fedoraproject.org/fedora-minimal:39
+      image: registry.fedoraproject.org/fedora-minimal:40
 
     steps:
       - name: Install dependencies
         run: |
           dnf5 update -y
-          dnf5 install -y git make gcc ccache flex bison elfutils-devel parted vboot-utils golang xz bc tar openssl-devel python3-pip uboot-tools
+          dnf5 install -y git make gcc ccache flex bison elfutils-devel parted vboot-utils golang xz bc tar openssl-devel python3-pip uboot-tools ${{ matrix.platform == 'arm64' && 'gcc-aarch64-linux-gnu' || '' }}
           pip3 install depthcharge-tools
 
       - uses: actions/checkout@v3
@@ -63,7 +63,7 @@ jobs:
         run: cp configs/kernel.${{ matrix.platform == 'x86_64' && 'x86' || 'a64' }} kernel/.config
 
       - name: Build submarine
-        run: make CC="ccache gcc" -j$(nproc) ${{ matrix.platform }}
+        run: make ${{ matrix.platform == 'x86_64' && 'CC="ccache gcc"' || '' }} -j$(nproc) ${{ matrix.platform }}
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
