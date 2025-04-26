@@ -1,0 +1,62 @@
+From 26739d4dc862c6fc6b97d99b0d60a8dbc85a02c4 Mon Sep 17 00:00:00 2001
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Date: Tue, 16 Apr 2024 16:29:11 +0200
+Subject: [PATCH] arm64: dts: mediatek: mt8195: Add DVFSRC and its subdevices
+
+Add a node for the Dynamic Voltage and Frequency Scaling Resource
+Collector (DVFSRC) and subnodes for the DVFSRC regulators, supplying
+power to CPU Cores and SCP, and External Memory Interface (EMI)
+interconnect.
+
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+---
+ arch/arm64/boot/dts/mediatek/mt8195.dtsi | 33 ++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+index cb9b6530910b3..c4d0d73374cd2 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+@@ -863,6 +863,39 @@ apmixedsys: syscon@1000c000 {
+ 			#clock-cells = <1>;
+ 		};
+ 
++		system-controller@10012000 {
++			compatible = "mediatek,mt8195-dvfsrc";
++			reg = <0 0x10012000 0 0x1000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			regulators {
++				compatible = "mediatek,mt8195-dvfsrc-regulator";
++				reg = <0>;
++
++				dvfsrc_vcore: dvfsrc-vcore {
++					regulator-name = "dvfsrc-vcore";
++					regulator-min-microvolt = <550000>;
++					regulator-max-microvolt = <750000>;
++					regulator-always-on;
++					regulator-boot-on;
++				};
++
++				dvfsrc_vscp: dvfsrc-vscp {
++					regulator-name = "dvfsrc-vcore";
++					regulator-min-microvolt = <550000>;
++					regulator-max-microvolt = <750000>;
++					regulator-always-on;
++					regulator-boot-on;
++				};
++			};
++
++			emi_icc: interconnect {
++				compatible = "mediatek,mt8195-emi";
++				reg = <1>;
++			};
++		};
++
+ 		systimer: timer@10017000 {
+ 			compatible = "mediatek,mt8195-timer",
+ 				     "mediatek,mt6765-timer";
+-- 
+GitLab
+
