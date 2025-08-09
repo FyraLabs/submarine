@@ -28,6 +28,8 @@ Please make sure you have these dependencies first before building.
 make
 gcc
 ccache
+awk
+patch
 flex
 bison
 elfutils-devel

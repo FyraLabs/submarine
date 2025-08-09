@@ -1,0 +1,33 @@
+From a28c1bf6a6b7883b516978d3282d01bc9abd4798 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?N=C3=ADcolas=20F=2E=20R=2E=20A=2E=20Prado?=
+ <nfraprado@collabora.com>
+Date: Mon, 25 Apr 2022 17:30:38 -0400
+Subject: [PATCH] STOPSHIP: arm64: dts: mediatek: asurada: Enable HDMI audio
+
+---
+ arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi b/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
+index 5778f3e4de39e..4d08fdf81793b 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
+@@ -221,6 +221,7 @@ rt1015p: audio-codec {
+ 
+ 	sound: sound {
+ 		mediatek,platform = <&afe>;
++		mediatek,hdmi-codec = <&anx_bridge_dp>;
+ 		pinctrl-names = "aud_clk_mosi_off",
+ 				"aud_clk_mosi_on",
+ 				"aud_dat_mosi_off",
+@@ -444,6 +445,7 @@ anx_bridge_dp: anx7625@58 {
+ 						 0x7f 0x7f 0x3f 0x3c
+ 						 0x20 0x60 0x3c 0x25
+ 						 0x60 0x2c 0x40 0x60>;
++		analogix,audio-enable;
+ 
+ 		ports {
+ 			#address-cells = <1>;
+-- 
+GitLab
+
