@@ -1,0 +1,36 @@
+From 16343aaad0b2886feb213e77d50c02d6e9917197 Mon Sep 17 00:00:00 2001
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Date: Thu, 8 Sep 2022 11:44:30 +0200
+Subject: [PATCH] arm64: dts: mediatek: mt8195: Add ADSP power domains to ADSP
+ mailboxes
+
+Communication with the AudioDSP is impossible if it has no power.
+
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+---
+ arch/arm64/boot/dts/mediatek/mt8195.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+index 04e41b557d448..e2c771095dfa8 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+@@ -969,6 +969,7 @@ adsp_mailbox0: mailbox@10816000 {
+ 			#mbox-cells = <0>;
+ 			reg = <0 0x10816000 0 0x1000>;
+ 			interrupts = <GIC_SPI 702 IRQ_TYPE_LEVEL_HIGH 0>;
++			power-domains = <&spm MT8195_POWER_DOMAIN_ADSP>;
+ 		};
+ 
+ 		adsp_mailbox1: mailbox@10817000 {
+@@ -976,6 +977,7 @@ adsp_mailbox1: mailbox@10817000 {
+ 			#mbox-cells = <0>;
+ 			reg = <0 0x10817000 0 0x1000>;
+ 			interrupts = <GIC_SPI 703 IRQ_TYPE_LEVEL_HIGH 0>;
++			power-domains = <&spm MT8195_POWER_DOMAIN_ADSP>;
+ 		};
+ 
+ 		afe: mt8195-afe-pcm@10890000 {
+-- 
+GitLab
+
