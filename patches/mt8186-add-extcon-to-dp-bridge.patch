@@ -1,0 +1,39 @@
+from: https://patchwork.kernel.org/project/linux-mediatek/patch/20241212062046.22509-4-xiazhengqiao@huaqin.corp-partner.google.com/
+
+commit 79ef2aae9fde746217c82a3c659e73fa2583774d
+Author: Zhengqiao Xia <xiazhengqiao@huaqin.corp-partner.google.com>
+Date:   Thu Dec 12 14:20:45 2024 +0800
+
+    arm64: dts: mediatek: Add extcon node for DP bridge
+    
+    Add extcon node for DP bridge to make the display work properly.
+    
+    Signed-off-by: Zhengqiao Xia <xiazhengqiao@huaqin.corp-partner.google.com>
+    Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+    Link: https://lore.kernel.org/r/20241212062046.22509-4-xiazhengqiao@huaqin.corp-partner.google.com
+    Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+
+diff --git a/arch/arm64/boot/dts/mediatek/mt8186-corsola.dtsi b/arch/arm64/boot/dts/mediatek/mt8186-corsola.dtsi
+index cfcc7909dfe6..e324e3fd347e 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8186-corsola.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8186-corsola.dtsi
+@@ -424,6 +424,7 @@ it6505dptx: dp-bridge@5c {
+ 		ovdd-supply = <&mt6366_vsim2_reg>;
+ 		pwr18-supply = <&pp1800_dpbrdg_dx>;
+ 		reset-gpios = <&pio 177 GPIO_ACTIVE_LOW>;
++		extcon = <&usbc_extcon>;
+ 
+ 		ports {
+ 			#address-cells = <1>;
+@@ -1656,6 +1657,11 @@ usb_c1: connector@1 {
+ 				try-power-role = "source";
+ 			};
+ 		};
++
++		usbc_extcon: extcon0 {
++			compatible = "google,extcon-usbc-cros-ec";
++			google,usb-port-id = <0>;
++		};
+ 	};
+ };
+ 

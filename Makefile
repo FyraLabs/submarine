@@ -48,6 +48,7 @@ $(KPART_X64): $(BZIMAGE_X64)
 	@echo 'Kernel partition binary saved as "$(KPART_X64)" in "images" directory.'
 
 $(BZIMAGE_X64): $(INITFSZ_X64)
+	find patches/ -type f -print0 | xargs -0 -n 1 patch -fud kernel -p1
 	cp $(CONFDIR)/$(CONFIG_X64) kernel/.config
 	make -C kernel olddefconfig
 	make -C kernel
@@ -85,6 +86,7 @@ $(KPART_A64): $(BZIMAGE_A64)
 	@echo 'Kernel partition binary saved as "$(KPART_A64)" in "images" directory.'
 
 $(BZIMAGE_A64): $(INITFSZ_A64)
+	find patches/ -type f -print0 | xargs -0 -n 1 patch -fud kernel -p1
 	cp $(CONFDIR)/$(CONFIG_A64) kernel/.config
 	CROSS_COMPILE=$(CROSS) ARCH=arm64 make -C kernel olddefconfig
 	CROSS_COMPILE=$(CROSS) ARCH=arm64 make -C kernel

@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         run: |
           dnf5 update -y
-          dnf5 install -y git make gcc ccache flex bison elfutils-devel parted vboot-utils golang xz bc tar openssl-devel openssl-devel-engine python3-pip uboot-tools 
+          dnf5 install -y git make gcc ccache awk patch flex bison elfutils-devel parted vboot-utils golang xz bc tar openssl-devel openssl-devel-engine python3-pip uboot-tools 
           pip3 install depthcharge-tools
       - uses: actions/checkout@v4
         with:
