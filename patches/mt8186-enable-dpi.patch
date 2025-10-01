@@ -1,0 +1,14 @@
+diff --git a/arch/arm64/boot/dts/mediatek/mt8186-corsola.dtsi b/arch/arm64/boot/dts/mediatek/mt8186-corsola.dtsi
+index cfcc7909dfe6..36f365816aec 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8186-corsola.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8186-corsola.dtsi
+@@ -353,8 +353,7 @@ &dpi {
+ 	pinctrl-names = "default", "sleep";
+ 	pinctrl-0 = <&dpi_pins_default>;
+ 	pinctrl-1 = <&dpi_pins_sleep>;
+-	/* TODO Re-enable after DP to Type-C port muxing can be described */
+-	status = "disabled";
++	status = "okay";
+ };
+ 
+ &dpi_out {
