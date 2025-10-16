@@ -99,7 +99,7 @@ $(INITFSZ_A64): $(INITFS_A64)
 $(INITFS_A64):
 	mkdir -p build images
 	cd u-root; \
-	  GBB_PATH=u-root GOOS=linux GOARCH=arm64 u-root -o ../$(WORKDIR)/$(INITFS_A64) -uinitcmd="elvish -c 'sleep 3; boot'" core cmds/boot/boot
+	  GBB_PATH=u-root GOOS=linux GOARCH=arm64 u-root -o ../$(WORKDIR)/$(INITFS_A64) -uinitcmd="gosh -c 'sleep 3; boot'" core cmds/boot/boot
 
 clean:
 	rm -rf $(WORKDIR)
