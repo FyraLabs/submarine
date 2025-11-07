@@ -15,7 +15,10 @@ Submarine provides a minimal Linux environmemt that lives in a small partition (
 
 ## 📦 Builds
 
-We offer prebuilt versions of the images per each commit:
+- [Latest Release](https://github.com/FyraLabs/submarine/releases)
+- [All Releases](https://github.com/FyraLabs/submarine)
+
+### Builds from `main`
 
 - [Latest x86_64 build](https://nightly.link/FyraLabs/submarine/workflows/build/main/submarine-x86_64.zip)
 - [Latest arm64 build](https://nightly.link/FyraLabs/submarine/workflows/build/main/submarine-arm64.zip)
