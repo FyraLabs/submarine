@@ -24,7 +24,9 @@ IMG_A64=$(project_name)-a64.bin
 .PHONY: usage
 
 ifeq ($(shell uname -m), x86_64)
-        CROSS=aarch64-linux-gnu-
+	ifneq ($(CROSS), "")
+		CROSS=aarch64-linux-gnu-
+	endif
 endif
 
 usage:
