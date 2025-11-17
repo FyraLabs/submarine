@@ -1,0 +1,27 @@
+From ffffe9745bc0f6925059165354c889053873cdd8 Mon Sep 17 00:00:00 2001
+From: Michal Bogdziewicz <michal@bogdziewicz.xyz>
+Date: Sun, 27 Jul 2025 15:37:23 +0200
+Subject: [PATCH 3/4] SoC: mediatek: mt8186: correct the HDMI widgets
+
+Use SND_SOC_DAPM_LINE instead of SND_SOC_DAPM_OUTPUT to trigger
+DAPM events to hdmi-codec when userspace control the DPAM pin.
+---
+ sound/soc/mediatek/mt8186/mt8186-mt6366.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sound/soc/mediatek/mt8186/mt8186-mt6366.c b/sound/soc/mediatek/mt8186/mt8186-mt6366.c
+index 771d53611c2a..da5db61af649 100644
+--- a/sound/soc/mediatek/mt8186/mt8186-mt6366.c
++++ b/sound/soc/mediatek/mt8186/mt8186-mt6366.c
+@@ -1053,7 +1053,7 @@ mt8186_mt6366_rt1019_rt5682s_widgets[] = {
+ 	SND_SOC_DAPM_SPK("Speakers", NULL),
+ 	SND_SOC_DAPM_HP("Headphone", NULL),
+ 	SND_SOC_DAPM_MIC("Headset Mic", NULL),
+-	SND_SOC_DAPM_OUTPUT("HDMI1"),
++	SND_SOC_DAPM_LINE("HDMI1", NULL),
+ 	SND_SOC_DAPM_MIXER(SOF_DMA_DL1, SND_SOC_NOPM, 0, 0, NULL, 0),
+ 	SND_SOC_DAPM_MIXER(SOF_DMA_DL2, SND_SOC_NOPM, 0, 0, NULL, 0),
+ 	SND_SOC_DAPM_MIXER(SOF_DMA_UL1, SND_SOC_NOPM, 0, 0, NULL, 0),
+-- 
+2.50.0
+
