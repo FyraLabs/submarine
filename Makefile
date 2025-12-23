@@ -7,6 +7,9 @@ OUTPUTDIR=images
 TMPFILE=/tmp/$(project_name)
 VPATH=$(WORKDIR):$(OUTPUTDIR)
 
+UROOT_CMDS=minimal cmds/boot/boot
+UINITCMD="gosh -c 'sleep 3; boot'"
+
 CONFIG_X64=kernel.x86
 BZIMAGE_X64=bzImage.x86
 INITFS_X64=u-root-x86.cpio
@@ -59,7 +62,7 @@ $(BZIMAGE_X64): $(INITFS_X64)
 $(INITFS_X64):
 	mkdir -p build
 	cd u-root; \
-	  GBB_PATH=u-root GOOS=linux GOARCH=amd64 u-root -o ../$(WORKDIR)/$(INITFS_X64) -uinitcmd="gosh -c 'sleep 3; boot'" core cmds/boot/boot
+	  GBB_PATH=u-root GOOS=linux GOARCH=amd64 u-root -o ../$(WORKDIR)/$(INITFS_X64) -uinitcmd=$(UINITCMD) $(UROOT_CMDS)
 
 
 # Use 'make arm64' to build ARM64 (cross-compiling is supported).
@@ -95,7 +98,7 @@ $(BZIMAGE_A64): $(INITFS_A64)
 $(INITFS_A64):
 	mkdir -p build images
 	cd u-root; \
-	  GBB_PATH=u-root GOOS=linux GOARCH=arm64 u-root -o ../$(WORKDIR)/$(INITFS_A64) -uinitcmd="gosh -c 'sleep 3; boot'" core cmds/boot/boot
+	  GBB_PATH=u-root GOOS=linux GOARCH=arm64 u-root -o ../$(WORKDIR)/$(INITFS_A64) -uinitcmd=$(UINITCMD) $(UROOT_CMDS)
 
 clean:
 	rm -rf $(WORKDIR)
