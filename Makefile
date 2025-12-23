@@ -49,15 +49,12 @@ $(KPART_X64): $(BZIMAGE_X64)
 	cp $(WORKDIR)/$(KPART_X64) $(OUTPUTDIR)/$(KPART_X64)
 	@echo 'Kernel partition binary saved as "$(KPART_X64)" in "images" directory.'
 
-$(BZIMAGE_X64): $(INITFSZ_X64)
+$(BZIMAGE_X64): $(INITFS_X64)
 	find patches/ -type f -print0 | xargs -0 -n 1 patch -fud kernel -p1
 	cp $(CONFDIR)/$(CONFIG_X64) kernel/.config
 	make -C kernel olddefconfig
 	make -C kernel
 	cp kernel/arch/x86/boot/bzImage $(WORKDIR)/$(BZIMAGE_X64)
-
-$(INITFSZ_X64): $(INITFS_X64)
-	xz -kf -9 --check=crc32 $(WORKDIR)/$(INITFS_X64)
 
 $(INITFS_X64):
 	mkdir -p build
@@ -87,16 +84,13 @@ $(KPART_A64): $(BZIMAGE_A64)
 	cp $(WORKDIR)/$(KPART_A64) $(OUTPUTDIR)/$(KPART_A64)
 	@echo 'Kernel partition binary saved as "$(KPART_A64)" in "images" directory.'
 
-$(BZIMAGE_A64): $(INITFSZ_A64)
+$(BZIMAGE_A64): $(INITFS_A64)
 	find patches/ -type f -print0 | xargs -0 -n 1 patch -fud kernel -p1
 	cp $(CONFDIR)/$(CONFIG_A64) kernel/.config
 	CROSS_COMPILE=$(CROSS) ARCH=arm64 make -C kernel olddefconfig
 	CROSS_COMPILE=$(CROSS) ARCH=arm64 make -C kernel
 	CROSS_COMPILE=$(CROSS) ARCH=arm64 make -C kernel dtbs_install INSTALL_DTBS_PATH=../$(WORKDIR)/dtbs
 	cp kernel/arch/arm64/boot/Image.gz $(WORKDIR)/$(BZIMAGE_A64)
-
-$(INITFSZ_A64): $(INITFS_A64)
-	xz -kf -9 --check=crc32 $(WORKDIR)/$(INITFS_A64)
 
 $(INITFS_A64):
 	mkdir -p build images
