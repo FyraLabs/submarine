@@ -1,0 +1,13 @@
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+index a94c51a83261..dd1c3f725df7 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+@@ -992,7 +992,7 @@ static int mtk_drm_of_ddp_path_build_one(struct device *dev, enum mtk_crtc_path
+ 	default:
+ 		dev_err(dev, "Invalid display hw pipeline. Last component: %d (ret=%d)\n",
+ 			temp_path[idx - 1], ret);
+-		return -EINVAL;
++		return -ENODEV;
+ 	}
+ 
+ 	final_ddp_path = devm_kmemdup(dev, temp_path, idx * sizeof(temp_path[0]), GFP_KERNEL);
