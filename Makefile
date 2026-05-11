@@ -24,9 +24,7 @@ IMG_A64=$(project_name)-a64.bin
 .PHONY: usage
 
 ifeq ($(shell uname -m), x86_64)
-	ifneq ($(CROSS), "")
-		CROSS=aarch64-linux-gnu-
-	endif
+CROSS ?= aarch64-linux-gnu-
 endif
 
 usage:
@@ -52,8 +50,8 @@ $(KPART_X64): $(BZIMAGE_X64)
 $(BZIMAGE_X64): $(INITFSZ_X64)
 	find patches/ -type f -print0 | xargs -0 -n 1 patch -fud kernel -p1
 	cp $(CONFDIR)/$(CONFIG_X64) kernel/.config
-	make -C kernel olddefconfig
-	make -C kernel
+	$(MAKE) -C kernel olddefconfig
+	$(MAKE) -C kernel
 	cp kernel/arch/x86/boot/bzImage $(WORKDIR)/$(BZIMAGE_X64)
 
 $(INITFSZ_X64): $(INITFS_X64)
@@ -90,9 +88,9 @@ $(KPART_A64): $(BZIMAGE_A64)
 $(BZIMAGE_A64): $(INITFSZ_A64)
 	find patches/ -type f -print0 | xargs -0 -n 1 patch -fud kernel -p1
 	cp $(CONFDIR)/$(CONFIG_A64) kernel/.config
-	CROSS_COMPILE=$(CROSS) ARCH=arm64 make -C kernel olddefconfig
-	CROSS_COMPILE=$(CROSS) ARCH=arm64 make -C kernel
-	CROSS_COMPILE=$(CROSS) ARCH=arm64 make -C kernel dtbs_install INSTALL_DTBS_PATH=../$(WORKDIR)/dtbs
+	CROSS_COMPILE=$(CROSS) ARCH=arm64 $(MAKE) -C kernel olddefconfig
+	CROSS_COMPILE=$(CROSS) ARCH=arm64 $(MAKE) -C kernel
+	CROSS_COMPILE=$(CROSS) ARCH=arm64 $(MAKE) -C kernel dtbs_install INSTALL_DTBS_PATH=../$(WORKDIR)/dtbs
 	cp kernel/arch/arm64/boot/Image.gz $(WORKDIR)/$(BZIMAGE_A64)
 
 $(INITFSZ_A64): $(INITFS_A64)
