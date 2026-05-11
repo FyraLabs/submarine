@@ -23,7 +23,7 @@ jobs:
         run: |
           dnf install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
           dnf update -y
-          dnf install -y git make gcc ccache awk patch flex bison elfutils-devel parted vboot-utils golang xz bc tar openssl-devel openssl-devel-engine python3-pip uboot-tools depthcharge-tools
+          dnf install -y git make gcc ccache awk patch flex bison elfutils-devel parted vboot-utils golang xz bc tar openssl-devel openssl-devel-engine uboot-tools depthcharge-tools
       - uses: actions/checkout@v4
         with:
           submodules: true
