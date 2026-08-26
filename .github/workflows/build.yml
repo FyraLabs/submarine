@@ -23,7 +23,8 @@ jobs:
         run: |
           dnf install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
           dnf update -y
-          dnf install -y git make gcc ccache awk patch flex bison elfutils-devel parted vboot-utils golang xz bc tar openssl-devel openssl-devel-engine uboot-tools depthcharge-tools
+          dnf install -y git make gcc ccache awk patch flex bison elfutils-devel parted vboot-utils golang xz bc tar openssl-devel openssl-devel-engine uboot-tools depthcharge-tools golang-github-u-root
+
       - uses: actions/checkout@v4
         with:
           submodules: true
@@ -56,9 +57,6 @@ jobs:
           restore-keys: |
             ccache-${{ matrix.platform }}-${{ env.KERNEL_COMMIT }}-
             ccache-${{ matrix.platform }}-
-
-      - name: Install u-root
-        run: go install github.com/u-root/u-root@$UROOT_COMMIT
 
       - name: Copy submarine kernel configuration
         run: cp configs/kernel.${{ matrix.platform == 'x86_64' && 'x86' || 'a64' }} kernel/.config
