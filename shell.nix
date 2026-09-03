@@ -3,24 +3,28 @@
 }:
 with pkgs;
 mkShell {
-  name = "generic-cross-arm64";
+  name = "submarine-dev";
   buildInputs = [
     # Tools
     clang-tools
     coreboot-utils
-    dtc
-    ubootTools
-    # u-root
+    # submarine
     go
     u-root
-    # Linux deps
+    depthcharge-tools
+    parted
+    ubootTools
+    util-linux
+    vboot_reference
+    # dev deps
     ncurses
     pkg-config
     # Compiler
-    pkgsCross.aarch64-multiplatform-musl.stdenv.cc
+    coreboot-toolchain.aarch64
+    coreboot-toolchain.x64
     (lib.hiPrio gcc)
   ]
   ++ linux.nativeBuildInputs;
   PKG_CONFIG_PATH = "${ncurses}/lib/pkgconfig";
-  CROSS = "aarch64-unknown-linux-musl-";
+  CROSS = "aarch64-elf-";
 }
