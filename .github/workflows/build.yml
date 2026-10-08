@@ -58,9 +58,6 @@ jobs:
             ccache-${{ matrix.platform }}-${{ env.KERNEL_COMMIT }}-
             ccache-${{ matrix.platform }}-
 
-      - name: Copy submarine kernel configuration
-        run: cp configs/kernel.${{ matrix.platform == 'x86_64' && 'x86' || 'a64' }} kernel/.config
-
       - name: Build submarine
         run: make CC="ccache gcc" -j$(nproc) ${{ matrix.platform }}
 
