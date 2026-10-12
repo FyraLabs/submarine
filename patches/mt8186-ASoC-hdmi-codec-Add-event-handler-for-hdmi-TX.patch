@@ -1,0 +1,105 @@
+From 919f122e1e81e7f83afc1097ab2c91c7ceada9f9 Mon Sep 17 00:00:00 2001
+From: Michal Bogdziewicz <michal@bogdziewicz.xyz>
+Date: Sun, 27 Jul 2025 15:36:24 +0200
+Subject: [PATCH 2/4] ASoC: hdmi-codec: Add event handler for hdmi TX
+
+If the speaker and hdmi are connect to the same port of I2S,
+when try to switch to speaker playback, we will find that hdmi
+is always turned on automatically. The connection as follows:
+
+			==> hdmi-codec ==> it6505(HDMI output)
+DL1(FE) ==> I2S3(BE)
+			==> rt1015p(SPEAKER output)
+
+So in order to separately control their power on/off, we have
+added a dapm widget to notify each output. Also the machine driver
+need add a _PIN_SWITCH() on the output of the device that will
+cause DAPM to keep the device powered down when not in use.
+
+The purpose of adding .trigger callback here is to enable hdmi-codec
+to notify the dp output driver to power on or off device.
+---
+ include/sound/hdmi-codec.h    |  6 ++++++
+ sound/soc/codecs/hdmi-codec.c | 32 ++++++++++++++++++++++++++++++--
+ 2 files changed, 36 insertions(+), 2 deletions(-)
+
+diff --git a/include/sound/hdmi-codec.h b/include/sound/hdmi-codec.h
+index 5e1a9eafd10f..1d0f5307d77a 100644
+--- a/include/sound/hdmi-codec.h
++++ b/include/sound/hdmi-codec.h
+@@ -80,6 +80,12 @@ struct hdmi_codec_ops {
+ 		       struct hdmi_codec_daifmt *fmt,
+ 		       struct hdmi_codec_params *hparms);
+ 
++	/*
++	 * PCM trigger callback.
++	 * Optional
++	 */
++	int (*trigger)(struct device *dev, int cmd);
++
+ 	/*
+ 	 * Shuts down the audio stream.
+ 	 * Mandatory
+diff --git a/sound/soc/codecs/hdmi-codec.c b/sound/soc/codecs/hdmi-codec.c
+index d9df29a26f4f..5cc6645e7a1e 100644
+--- a/sound/soc/codecs/hdmi-codec.c
++++ b/sound/soc/codecs/hdmi-codec.c
+@@ -290,7 +290,31 @@ struct hdmi_codec_priv {
+ 	u8 iec_status[AES_IEC958_STATUS_SIZE];
+ };
+ 
++static int hdmi_tx_event(struct snd_soc_dapm_widget *w,
++		struct snd_kcontrol *kcontrol, int event)
++{
++	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
++	struct hdmi_codec_priv *hcp = snd_soc_component_get_drvdata(component);
++
++	switch (event) {
++	case SND_SOC_DAPM_PRE_PMU:
++		if (hcp->hcd.ops->trigger)
++			hcp->hcd.ops->trigger(component->dev->parent, SNDRV_PCM_TRIGGER_START);
++		break;
++	case SND_SOC_DAPM_POST_PMD:
++		if (hcp->hcd.ops->trigger)
++			hcp->hcd.ops->trigger(component->dev->parent, SNDRV_PCM_TRIGGER_STOP);
++		break;
++	default:
++		break;
++	}
++
++	return 0;
++}
++
+ static const struct snd_soc_dapm_widget hdmi_widgets[] = {
++	SND_SOC_DAPM_OUT_DRV_E("SDB", SND_SOC_NOPM, 0, 0, NULL, 0, hdmi_tx_event,
++			       SND_SOC_DAPM_POST_PMD | SND_SOC_DAPM_PRE_PMU),
+ 	SND_SOC_DAPM_OUTPUT("TX"),
+ 	SND_SOC_DAPM_OUTPUT("RX"),
+ };
+@@ -831,9 +855,13 @@ static int hdmi_dai_probe(struct snd_soc_dai *dai)
+ 	struct hdmi_codec_daifmt *daifmt;
+ 	struct snd_soc_dapm_route route[] = {
+ 		{
+-			.sink = "TX",
++			.sink = "SDB",
+ 			.source = dai->driver->playback.stream_name,
+ 		},
++		{
++			.sink = "TX",
++			.source = "SDB",
++		},
+ 		{
+ 			.sink = dai->driver->capture.stream_name,
+ 			.source = "RX",
+@@ -848,7 +876,7 @@ static int hdmi_dai_probe(struct snd_soc_dai *dai)
+ 		if (!route[i].source || !route[i].sink)
+ 			continue;
+ 
+-		ret = snd_soc_dapm_add_routes(dapm, &route[i], 1);
++		ret = snd_soc_dapm_add_routes(dapm, route, ARRAY_SIZE(route));
+ 		if (ret)
+ 			return ret;
+ 	}
+-- 
+2.50.0
+
